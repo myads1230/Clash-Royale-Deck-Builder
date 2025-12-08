@@ -1,4 +1,4 @@
-import { cards, typeIcons } from '../data/cards'
+import { cards } from '../data/cards'
 
 function DeckCard({ deck, onClick }) {
   const getWinRateClass = (winRate) => {
@@ -28,10 +28,41 @@ function DeckCard({ deck, onClick }) {
                 key={index} 
                 className={`deck-item-card ${rarityClass}`}
                 title={card.name}
+                style={{ position: 'relative' }}
               >
                 <span className="elixir">{card.elixir}</span>
-                <span style={{ fontSize: '1.25rem' }}>{typeIcons[card.type] || '⚔️'}</span>
-                <span style={{ fontSize: '0.55rem', color: 'var(--text-muted)' }}>
+                
+                {/* Evolution badge */}
+                {card.hasEvolution && (
+                  <span 
+                    style={{
+                      position: 'absolute',
+                      top: '2px',
+                      right: '2px',
+                      fontSize: '0.4rem',
+                      background: 'linear-gradient(135deg, #00e676 0%, #00c853 100%)',
+                      color: '#000',
+                      borderRadius: '2px',
+                      padding: '1px 2px',
+                      fontWeight: 700,
+                      lineHeight: 1
+                    }}
+                  >
+                    EVO
+                  </span>
+                )}
+                
+                <img 
+                  src={card.image} 
+                  alt={card.name}
+                  style={{ 
+                    width: '40px', 
+                    height: '40px', 
+                    objectFit: 'contain'
+                  }}
+                  loading="lazy"
+                />
+                <span style={{ fontSize: '0.5rem', color: 'var(--text-muted)', marginTop: '2px' }}>
                   {card.name.length > 8 ? card.name.substring(0, 6) + '..' : card.name}
                 </span>
               </div>

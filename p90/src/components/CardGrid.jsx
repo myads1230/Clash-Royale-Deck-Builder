@@ -1,10 +1,11 @@
 import { useState, useMemo } from 'react'
-import { cards, rarityColors, typeIcons } from '../data/cards'
+import { cards, rarityColors, getCardType } from '../data/cards'
 
 function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [filterRarity, setFilterRarity] = useState('All')
   const [filterType, setFilterType] = useState('All')
+  const [showEvolutionsOnly, setShowEvolutionsOnly] = useState(false)
 
   const rarities = ['All', 'Common', 'Rare', 'Epic', 'Legendary', 'Champion']
   const types = ['All', 'Troop', 'Spell', 'Building']
@@ -13,10 +14,12 @@ function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
     return cards.filter(card => {
       const matchesSearch = card.name.toLowerCase().includes(searchTerm.toLowerCase())
       const matchesRarity = filterRarity === 'All' || card.rarity === filterRarity
-      const matchesType = filterType === 'All' || card.type === filterType
-      return matchesSearch && matchesRarity && matchesType
+      const cardType = getCardType(card)
+      const matchesType = filterType === 'All' || cardType === filterType
+      const matchesEvolution = !showEvolutionsOnly || card.hasEvolution
+      return matchesSearch && matchesRarity && matchesType && matchesEvolution
     })
-  }, [searchTerm, filterRarity, filterType])
+  }, [searchTerm, filterRarity, filterType, showEvolutionsOnly])
 
   const handleCardClick = (card) => {
     if (selectedCards.includes(card.id)) {
@@ -65,9 +68,22 @@ function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
             className={`filter-pill ${filterType === type ? 'active' : ''}`}
             onClick={() => setFilterType(type)}
           >
-            {type !== 'All' && typeIcons[type]} {type}
+            {type === 'Troop' && '⚔️'} 
+            {type === 'Spell' && '✨'} 
+            {type === 'Building' && '🏰'} 
+            {type}
           </button>
         ))}
+        <button
+          className={`filter-pill ${showEvolutionsOnly ? 'active' : ''}`}
+          onClick={() => setShowEvolutionsOnly(!showEvolutionsOnly)}
+          style={showEvolutionsOnly ? { 
+            background: 'linear-gradient(135deg, #00e676 0%, #00c853 100%)',
+            color: '#000'
+          } : {}}
+        >
+          🧬 Evolutions
+        </button>
       </div>
 
       {/* Card Grid */}
@@ -87,7 +103,38 @@ function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
               }}
             >
               <span className="card-elixir">{card.elixir}</span>
-              <span className="card-icon">{typeIcons[card.type] || '⚔️'}</span>
+              
+              {/* Evolution badge */}
+              {card.hasEvolution && (
+                <span 
+                  style={{
+                    position: 'absolute',
+                    top: '2px',
+                    right: '2px',
+                    fontSize: '0.5rem',
+                    background: 'linear-gradient(135deg, #00e676 0%, #00c853 100%)',
+                    color: '#000',
+                    borderRadius: '2px',
+                    padding: '1px 2px',
+                    fontWeight: 700,
+                    lineHeight: 1
+                  }}
+                >
+                  EVO
+                </span>
+              )}
+              
+              <img 
+                src={card.image} 
+                alt={card.name}
+                style={{ 
+                  width: '45px', 
+                  height: '45px', 
+                  objectFit: 'contain',
+                  marginBottom: '2px'
+                }}
+                loading="lazy"
+              />
               <span className="card-name">{card.name}</span>
             </div>
           )
@@ -99,6 +146,10 @@ function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
           No cards found matching your filters
         </div>
       )}
+      
+      <p className="text-muted text-center mt-3 mb-0" style={{ fontSize: '0.75rem' }}>
+        {filteredCards.length} cards found
+      </p>
     </div>
   )
 }

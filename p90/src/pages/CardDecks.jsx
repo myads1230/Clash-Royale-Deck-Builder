@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
-import { cards, rarityColors, typeIcons } from '../data/cards'
+import { cards, rarityColors, getCardType } from '../data/cards'
 import { decksByCard } from '../data/decks'
 import DeckCard from '../components/DeckCard'
 
@@ -20,7 +20,8 @@ function CardDecks() {
     return cards.filter(card => {
       const matchesSearch = card.name.toLowerCase().includes(searchTerm.toLowerCase())
       const matchesRarity = filterRarity === 'All' || card.rarity === filterRarity
-      const matchesType = filterType === 'All' || card.type === filterType
+      const cardType = getCardType(card)
+      const matchesType = filterType === 'All' || cardType === filterType
       return matchesSearch && matchesRarity && matchesType
     })
   }, [searchTerm, filterRarity, filterType])
@@ -85,7 +86,10 @@ function CardDecks() {
                       onClick={() => setFilterType(type)}
                       style={{ fontSize: '0.75rem', padding: '0.35rem 0.75rem' }}
                     >
-                      {type !== 'All' && typeIcons[type]} {type}
+                      {type === 'Troop' && '⚔️'} 
+                      {type === 'Spell' && '✨'} 
+                      {type === 'Building' && '🏰'} 
+                      {type}
                     </button>
                   ))}
                 </div>
@@ -107,8 +111,27 @@ function CardDecks() {
                         }}
                       >
                         <span className="card-elixir">{card.elixir}</span>
-                        <span className="card-icon">{typeIcons[card.type] || '⚔️'}</span>
-                        <span className="card-name">{card.name}</span>
+                        
+                        {/* Evolution badge */}
+                        {card.hasEvolution && (
+                          <span 
+                            style={{
+                              position: 'absolute',
+                              top: '2px',
+                              right: hasFeaturedDecks ? '18px' : '2px',
+                              fontSize: '0.5rem',
+                              background: 'linear-gradient(135deg, #00e676 0%, #00c853 100%)',
+                              color: '#000',
+                              borderRadius: '2px',
+                              padding: '1px 2px',
+                              fontWeight: 700,
+                              lineHeight: 1
+                            }}
+                          >
+                            EVO
+                          </span>
+                        )}
+                        
                         {hasFeaturedDecks && (
                           <span 
                             style={{
@@ -121,13 +144,26 @@ function CardDecks() {
                             ⭐
                           </span>
                         )}
+                        
+                        <img 
+                          src={card.image} 
+                          alt={card.name}
+                          style={{ 
+                            width: '45px', 
+                            height: '45px', 
+                            objectFit: 'contain',
+                            marginBottom: '2px'
+                          }}
+                          loading="lazy"
+                        />
+                        <span className="card-name">{card.name}</span>
                       </div>
                     )
                   })}
                 </div>
 
                 <p className="text-muted text-center mt-3 mb-0" style={{ fontSize: '0.75rem' }}>
-                  ⭐ Cards with featured decks
+                  ⭐ Cards with featured decks • {filteredCards.length} cards shown
                 </p>
               </div>
             </div>
@@ -152,10 +188,32 @@ function CardDecks() {
                           flexDirection: 'column',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          border: '3px solid'
+                          border: '3px solid',
+                          position: 'relative'
                         }}
                       >
-                        <span style={{ fontSize: '2.5rem' }}>{typeIcons[selectedCardData.type] || '⚔️'}</span>
+                        {selectedCardData.hasEvolution && (
+                          <span 
+                            style={{
+                              position: 'absolute',
+                              top: '4px',
+                              right: '4px',
+                              fontSize: '0.5rem',
+                              background: 'linear-gradient(135deg, #00e676 0%, #00c853 100%)',
+                              color: '#000',
+                              borderRadius: '3px',
+                              padding: '2px 4px',
+                              fontWeight: 700
+                            }}
+                          >
+                            EVO
+                          </span>
+                        )}
+                        <img 
+                          src={selectedCardData.image} 
+                          alt={selectedCardData.name}
+                          style={{ width: '60px', height: '60px', objectFit: 'contain' }}
+                        />
                       </div>
                       <div>
                         <h2 className="mb-1">{selectedCardData.name}</h2>
@@ -171,11 +229,15 @@ function CardDecks() {
                             {selectedCardData.rarity}
                           </span>
                           <span className="filter-pill" style={{ cursor: 'default' }}>
-                            {typeIcons[selectedCardData.type]} {selectedCardData.type}
+                            {getCardType(selectedCardData) === 'Troop' && '⚔️'}
+                            {getCardType(selectedCardData) === 'Spell' && '✨'}
+                            {getCardType(selectedCardData) === 'Building' && '🏰'}
+                            {' '}{getCardType(selectedCardData)}
                           </span>
                         </div>
                         <p className="text-muted mt-2 mb-0" style={{ fontSize: '0.875rem' }}>
-                          Arena: {selectedCardData.arena}
+                          Max Level: {selectedCardData.maxLevel}
+                          {selectedCardData.hasEvolution && ` • Evolution Level: ${selectedCardData.evolutionLevel}`}
                         </p>
                       </div>
                     </div>
