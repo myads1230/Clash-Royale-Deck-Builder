@@ -23,10 +23,10 @@ function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
 
   const handleCardClick = (card) => {
     if (selectedCards.includes(card.id)) {
-      return // Already selected
+      return
     }
     if (selectedCards.length >= maxCards) {
-      return // Max cards reached
+      return
     }
     onCardSelect(card.id)
   }
@@ -99,22 +99,13 @@ function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
               onClick={() => handleCardClick(card)}
               style={{
                 opacity: isSelected ? 0.5 : 1,
-                cursor: isSelected || selectedCards.length >= maxCards ? 'not-allowed' : 'pointer',
-                padding: 0,
-                overflow: 'hidden',
-                position: 'relative',
-                aspectRatio: '1 / 1.2'
+                cursor: isSelected || selectedCards.length >= maxCards ? 'not-allowed' : 'pointer'
               }}
             >
               {/* Full-size card image */}
               <img 
                 src={card.image} 
                 alt={card.name}
-                style={{ 
-                  width: '100%', 
-                  height: '100%', 
-                  objectFit: 'cover'
-                }}
                 loading="lazy"
               />
               
@@ -133,9 +124,10 @@ function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
                   justifyContent: 'center',
                   color: 'white',
                   fontWeight: 700,
-                  fontSize: '0.65rem',
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3)',
-                  border: '1px solid rgba(255,255,255,0.2)'
+                  fontSize: '0.6rem',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3)',
+                  border: '1px solid rgba(255,255,255,0.2)',
+                  zIndex: 2
                 }}
               >
                 {card.elixir}
@@ -148,14 +140,15 @@ function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
                     position: 'absolute',
                     top: '3px',
                     right: '3px',
-                    fontSize: '0.45rem',
+                    fontSize: '0.4rem',
                     background: 'linear-gradient(135deg, #00e676 0%, #00c853 100%)',
                     color: '#000',
                     borderRadius: '3px',
                     padding: '2px 3px',
                     fontWeight: 700,
                     lineHeight: 1,
-                    boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.4)',
+                    zIndex: 2
                   }}
                 >
                   EVO
@@ -169,16 +162,17 @@ function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  background: 'linear-gradient(transparent, rgba(0,0,0,0.85))',
-                  padding: '10px 4px 4px',
-                  textAlign: 'center'
+                  background: 'linear-gradient(transparent, rgba(0,0,0,0.9))',
+                  padding: '12px 3px 3px',
+                  textAlign: 'center',
+                  zIndex: 1
                 }}
               >
                 <span style={{ 
-                  fontSize: '0.55rem',
+                  fontSize: '0.5rem',
                   color: 'white',
-                  fontWeight: 500,
-                  textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                  fontWeight: 600,
+                  textShadow: '0 1px 2px rgba(0,0,0,0.8)',
                   display: 'block',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',

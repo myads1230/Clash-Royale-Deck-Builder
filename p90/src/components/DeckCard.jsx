@@ -28,23 +28,11 @@ function DeckCard({ deck, onClick }) {
                 key={index} 
                 className={`deck-item-card ${rarityClass}`}
                 title={card.name}
-                style={{ 
-                  position: 'relative',
-                  padding: 0,
-                  overflow: 'hidden',
-                  width: '60px',
-                  height: '72px'
-                }}
               >
                 {/* Full-size card image */}
                 <img 
                   src={card.image} 
                   alt={card.name}
-                  style={{ 
-                    width: '100%', 
-                    height: '100%', 
-                    objectFit: 'cover'
-                  }}
                   loading="lazy"
                 />
                 
@@ -52,8 +40,8 @@ function DeckCard({ deck, onClick }) {
                 <div 
                   style={{
                     position: 'absolute',
-                    top: '2px',
-                    left: '2px',
+                    top: '3px',
+                    left: '3px',
                     width: '16px',
                     height: '20px',
                     background: 'linear-gradient(180deg, #a855f7 0%, #7c3aed 50%, #6d28d9 100%)',
@@ -63,9 +51,10 @@ function DeckCard({ deck, onClick }) {
                     justifyContent: 'center',
                     color: 'white',
                     fontWeight: 700,
-                    fontSize: '0.55rem',
-                    boxShadow: '0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3)',
-                    border: '1px solid rgba(255,255,255,0.2)'
+                    fontSize: '0.5rem',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.3)',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    zIndex: 2
                   }}
                 >
                   {card.elixir}
@@ -76,16 +65,17 @@ function DeckCard({ deck, onClick }) {
                   <div 
                     style={{
                       position: 'absolute',
-                      top: '2px',
-                      right: '2px',
-                      fontSize: '0.4rem',
+                      top: '3px',
+                      right: '3px',
+                      fontSize: '0.35rem',
                       background: 'linear-gradient(135deg, #00e676 0%, #00c853 100%)',
                       color: '#000',
                       borderRadius: '2px',
                       padding: '1px 2px',
                       fontWeight: 700,
                       lineHeight: 1,
-                      boxShadow: '0 1px 2px rgba(0,0,0,0.3)'
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.4)',
+                      zIndex: 2
                     }}
                   >
                     EVO
@@ -99,16 +89,17 @@ function DeckCard({ deck, onClick }) {
                     bottom: 0,
                     left: 0,
                     right: 0,
-                    background: 'linear-gradient(transparent, rgba(0,0,0,0.85))',
-                    padding: '8px 2px 3px',
-                    textAlign: 'center'
+                    background: 'linear-gradient(transparent, rgba(0,0,0,0.9))',
+                    padding: '10px 2px 3px',
+                    textAlign: 'center',
+                    zIndex: 1
                   }}
                 >
                   <span style={{ 
-                    fontSize: '0.45rem',
+                    fontSize: '0.4rem',
                     color: 'white',
-                    fontWeight: 500,
-                    textShadow: '0 1px 2px rgba(0,0,0,0.5)'
+                    fontWeight: 600,
+                    textShadow: '0 1px 2px rgba(0,0,0,0.8)'
                   }}>
                     {card.name.length > 8 ? card.name.substring(0, 7) + '..' : card.name}
                   </span>
