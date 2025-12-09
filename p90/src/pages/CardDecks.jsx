@@ -182,18 +182,41 @@ function CardDecks() {
                         style={{
                           width: '80px',
                           height: '96px',
-                          background: 'var(--gradient-card)',
                           borderRadius: '12px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          justifyContent: 'center',
                           border: '3px solid',
-                          position: 'relative'
+                          position: 'relative',
+                          overflow: 'hidden'
                         }}
                       >
+                        <img 
+                          src={selectedCardData.image} 
+                          alt={selectedCardData.name}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        />
+                        {/* Elixir drop */}
+                        <div 
+                          style={{
+                            position: 'absolute',
+                            top: '4px',
+                            left: '4px',
+                            width: '22px',
+                            height: '28px',
+                            background: 'linear-gradient(180deg, #a855f7 0%, #7c3aed 50%, #6d28d9 100%)',
+                            borderRadius: '50% 50% 50% 50% / 30% 30% 70% 70%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'white',
+                            fontWeight: 700,
+                            fontSize: '0.75rem',
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3)',
+                            border: '1px solid rgba(255,255,255,0.2)'
+                          }}
+                        >
+                          {selectedCardData.elixir}
+                        </div>
                         {selectedCardData.hasEvolution && (
-                          <span 
+                          <div 
                             style={{
                               position: 'absolute',
                               top: '4px',
@@ -203,17 +226,13 @@ function CardDecks() {
                               color: '#000',
                               borderRadius: '3px',
                               padding: '2px 4px',
-                              fontWeight: 700
+                              fontWeight: 700,
+                              boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
                             }}
                           >
                             EVO
-                          </span>
+                          </div>
                         )}
-                        <img 
-                          src={selectedCardData.image} 
-                          alt={selectedCardData.name}
-                          style={{ width: '60px', height: '60px', objectFit: 'contain' }}
-                        />
                       </div>
                       <div>
                         <h2 className="mb-1">{selectedCardData.name}</h2>

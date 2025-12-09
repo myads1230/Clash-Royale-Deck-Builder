@@ -325,7 +325,7 @@ h3 {
 }
 
 .deck-card-slot {
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1.2;
   background: var(--gradient-card);
   border: 2px solid var(--border-color);
   border-radius: 8px;
@@ -336,6 +336,7 @@ h3 {
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  padding: 0;
 }
 
 .deck-card-slot:hover {
@@ -352,16 +353,19 @@ h3 {
   position: absolute;
   top: 4px;
   left: 4px;
-  background: var(--cr-purple);
+  background: linear-gradient(180deg, #a855f7 0%, #7c3aed 50%, #6d28d9 100%);
   color: white;
   font-size: 0.7rem;
   font-weight: 700;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
+  width: 20px;
+  height: 25px;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  z-index: 2;
 }
 
 /* Card Rarity Borders */
@@ -460,7 +464,7 @@ h3 {
 }
 
 .card-grid-item {
-  aspect-ratio: 1;
+  aspect-ratio: 1 / 1.2;
   background: var(--gradient-card);
   border: 2px solid var(--border-color);
   border-radius: 8px;
@@ -470,9 +474,10 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
+  padding: 0;
   text-align: center;
   position: relative;
+  overflow: hidden;
 }
 
 .card-grid-item:hover {
@@ -486,19 +491,34 @@ h3 {
 }
 
 .card-grid-item .card-name {
-  font-size: 0.65rem;
+  font-size: 0.55rem;
   font-weight: 500;
   line-height: 1.2;
-  color: var(--text-secondary);
+  color: white;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 100%;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
 
-.card-grid-item .card-icon {
-  font-size: 1.75rem;
-  margin-bottom: 0.25rem;
+.card-grid-item .card-elixir {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  background: linear-gradient(180deg, #a855f7 0%, #7c3aed 50%, #6d28d9 100%);
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  width: 18px;
+  height: 22px;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  z-index: 2;
 }
 
 /* Filter Pills */
@@ -671,22 +691,27 @@ h3 {
   justify-content: center;
   font-size: 0.65rem;
   position: relative;
+  overflow: hidden;
+  padding: 0;
 }
 
 .deck-item-card .elixir {
   position: absolute;
   top: 2px;
   left: 2px;
-  background: var(--cr-purple);
+  background: linear-gradient(180deg, #a855f7 0%, #7c3aed 50%, #6d28d9 100%);
   color: white;
   width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  font-size: 0.6rem;
+  height: 20px;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  font-size: 0.55rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,255,255,0.2);
+  z-index: 2;
 }
 
 .deck-item-stats {

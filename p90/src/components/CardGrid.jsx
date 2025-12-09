@@ -99,43 +99,94 @@ function CardGrid({ onCardSelect, selectedCards = [], maxCards = 8 }) {
               onClick={() => handleCardClick(card)}
               style={{
                 opacity: isSelected ? 0.5 : 1,
-                cursor: isSelected || selectedCards.length >= maxCards ? 'not-allowed' : 'pointer'
+                cursor: isSelected || selectedCards.length >= maxCards ? 'not-allowed' : 'pointer',
+                padding: 0,
+                overflow: 'hidden',
+                position: 'relative',
+                aspectRatio: '1 / 1.2'
               }}
             >
-              <span className="card-elixir">{card.elixir}</span>
-              
-              {/* Evolution badge */}
-              {card.hasEvolution && (
-                <span 
-                  style={{
-                    position: 'absolute',
-                    top: '2px',
-                    right: '2px',
-                    fontSize: '0.5rem',
-                    background: 'linear-gradient(135deg, #00e676 0%, #00c853 100%)',
-                    color: '#000',
-                    borderRadius: '2px',
-                    padding: '1px 2px',
-                    fontWeight: 700,
-                    lineHeight: 1
-                  }}
-                >
-                  EVO
-                </span>
-              )}
-              
+              {/* Full-size card image */}
               <img 
                 src={card.image} 
                 alt={card.name}
                 style={{ 
-                  width: '45px', 
-                  height: '45px', 
-                  objectFit: 'contain',
-                  marginBottom: '2px'
+                  width: '100%', 
+                  height: '100%', 
+                  objectFit: 'cover'
                 }}
                 loading="lazy"
               />
-              <span className="card-name">{card.name}</span>
+              
+              {/* Elixir drop overlay */}
+              <div 
+                style={{
+                  position: 'absolute',
+                  top: '3px',
+                  left: '3px',
+                  width: '18px',
+                  height: '22px',
+                  background: 'linear-gradient(180deg, #a855f7 0%, #7c3aed 50%, #6d28d9 100%)',
+                  borderRadius: '50% 50% 50% 50% / 30% 30% 70% 70%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: 'white',
+                  fontWeight: 700,
+                  fontSize: '0.65rem',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3)',
+                  border: '1px solid rgba(255,255,255,0.2)'
+                }}
+              >
+                {card.elixir}
+              </div>
+              
+              {/* Evolution badge */}
+              {card.hasEvolution && (
+                <div 
+                  style={{
+                    position: 'absolute',
+                    top: '3px',
+                    right: '3px',
+                    fontSize: '0.45rem',
+                    background: 'linear-gradient(135deg, #00e676 0%, #00c853 100%)',
+                    color: '#000',
+                    borderRadius: '3px',
+                    padding: '2px 3px',
+                    fontWeight: 700,
+                    lineHeight: 1,
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
+                  }}
+                >
+                  EVO
+                </div>
+              )}
+              
+              {/* Card name overlay */}
+              <div 
+                style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  background: 'linear-gradient(transparent, rgba(0,0,0,0.85))',
+                  padding: '10px 4px 4px',
+                  textAlign: 'center'
+                }}
+              >
+                <span style={{ 
+                  fontSize: '0.55rem',
+                  color: 'white',
+                  fontWeight: 500,
+                  textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                  display: 'block',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap'
+                }}>
+                  {card.name}
+                </span>
+              </div>
             </div>
           )
         })}

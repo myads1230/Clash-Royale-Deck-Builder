@@ -28,13 +28,52 @@ function DeckCard({ deck, onClick }) {
                 key={index} 
                 className={`deck-item-card ${rarityClass}`}
                 title={card.name}
-                style={{ position: 'relative' }}
+                style={{ 
+                  position: 'relative',
+                  padding: 0,
+                  overflow: 'hidden',
+                  width: '60px',
+                  height: '72px'
+                }}
               >
-                <span className="elixir">{card.elixir}</span>
+                {/* Full-size card image */}
+                <img 
+                  src={card.image} 
+                  alt={card.name}
+                  style={{ 
+                    width: '100%', 
+                    height: '100%', 
+                    objectFit: 'cover'
+                  }}
+                  loading="lazy"
+                />
+                
+                {/* Elixir drop overlay */}
+                <div 
+                  style={{
+                    position: 'absolute',
+                    top: '2px',
+                    left: '2px',
+                    width: '16px',
+                    height: '20px',
+                    background: 'linear-gradient(180deg, #a855f7 0%, #7c3aed 50%, #6d28d9 100%)',
+                    borderRadius: '50% 50% 50% 50% / 30% 30% 70% 70%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    fontWeight: 700,
+                    fontSize: '0.55rem',
+                    boxShadow: '0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3)',
+                    border: '1px solid rgba(255,255,255,0.2)'
+                  }}
+                >
+                  {card.elixir}
+                </div>
                 
                 {/* Evolution badge */}
                 {card.hasEvolution && (
-                  <span 
+                  <div 
                     style={{
                       position: 'absolute',
                       top: '2px',
@@ -45,26 +84,35 @@ function DeckCard({ deck, onClick }) {
                       borderRadius: '2px',
                       padding: '1px 2px',
                       fontWeight: 700,
-                      lineHeight: 1
+                      lineHeight: 1,
+                      boxShadow: '0 1px 2px rgba(0,0,0,0.3)'
                     }}
                   >
                     EVO
-                  </span>
+                  </div>
                 )}
                 
-                <img 
-                  src={card.image} 
-                  alt={card.name}
-                  style={{ 
-                    width: '40px', 
-                    height: '40px', 
-                    objectFit: 'contain'
+                {/* Card name overlay */}
+                <div 
+                  style={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'linear-gradient(transparent, rgba(0,0,0,0.85))',
+                    padding: '8px 2px 3px',
+                    textAlign: 'center'
                   }}
-                  loading="lazy"
-                />
-                <span style={{ fontSize: '0.5rem', color: 'var(--text-muted)', marginTop: '2px' }}>
-                  {card.name.length > 8 ? card.name.substring(0, 6) + '..' : card.name}
-                </span>
+                >
+                  <span style={{ 
+                    fontSize: '0.45rem',
+                    color: 'white',
+                    fontWeight: 500,
+                    textShadow: '0 1px 2px rgba(0,0,0,0.5)'
+                  }}>
+                    {card.name.length > 8 ? card.name.substring(0, 7) + '..' : card.name}
+                  </span>
+                </div>
               </div>
             )
           })}
